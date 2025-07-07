@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+# You must remove unused comment lines for the released package.
+export DH_VERBOSE = 1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+ifneq ("$(wildcard /usr/bin/g++-9)","")
+	export CC = /usr/bin/gcc-9
+	export CXX = /usr/bin/g++-9
+else
+	export CC = /usr/bin/gcc-8
+	export CXX = /usr/bin/g++-8
+endif
+
+ifneq ("$(wildcard /usr/local/cuda-10.2)","")
+	export CUDA_TOOLKIT_ROOT_DIR = /usr/local/cuda-10.2
+endif
+ifneq ("$(wildcard /usr/local/cuda-11.4)","")
+	export CUDA_TOOLKIT_ROOT_DIR = /usr/local/cuda-11.4
+endif
+ifneq ("$(wildcard /usr/local/cuda-11.7)","")
+	export CUDA_TOOLKIT_ROOT_DIR = /usr/local/cuda-11.7
+endif
+
+%:
+	dh $@  
+
+override_dh_auto_configure:
+	echo CC ${CC}
+	echo CXX ${CXX}
+	dh_auto_configure -- \
+	      -DUSE_SYSTEM_LIBS=ON -DBUILD_GENERIC_ARCH=ON -DCMAKE_LIBRARY_ARCHITECTURE="$(DEB_TARGET_MULTIARCH)" -DCUDA_TOOLKIT_ROOT_DIR="${CUDA_TOOLKIT_ROOT_DIR}"

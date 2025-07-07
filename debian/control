@@ -1,0 +1,50 @@
+Source: splash-mapper
+Section: video
+Priority: optional
+Maintainer: Emmanuel Durand <edurand@sat.qc.ca>
+Build-Depends:
+    cmake, 
+    debhelper (>=11~),
+    build-essential,
+    gcc-9 | gcc-8,
+    g++-9 | g++-8,
+    git-core,
+    libxrandr-dev,
+    libxi-dev,
+    mesa-common-dev,
+    libgsl0-dev,
+    libatlas3-base,
+    libgphoto2-dev,
+    libz-dev,
+    libxinerama-dev,
+    libxcursor-dev,
+    python3-dev,
+    portaudio19-dev,
+    python3-numpy,
+    libopencv-dev,
+    libjsoncpp-dev,
+    libglfw3-dev,
+    libglm-dev,
+    libavcodec-dev,
+    libavformat-dev,
+    libavutil-dev,
+    libswscale-dev,
+    libsnappy-dev,
+    libzmq3-dev,
+    libshmdata-dev,
+    zip
+Standards-Version: 4.1.4
+Homepage: https://sat-metalab.gitlab.io/splash
+
+Package: splash-mapper
+Architecture: amd64 arm64
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Modular video-mapping software
+ Splash is a free (as in GPL) modular mapping software. Provided that the user
+ creates a 3D model with UV mapping of the projection surface, Splash will
+ take care of calibrating the videoprojectors (intrinsic and extrinsic
+ parameters, blending and color), and feed them with the input video sources.
+ Splash can handle multiple inputs, mapped on multiple 3D models, and has been
+ tested with up to eight outputs on two graphic cards. It currently runs on a
+ single computer but support for multiple computers is planned.
